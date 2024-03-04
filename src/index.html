@@ -13,7 +13,9 @@
   <main>
     <fieldset class="settings">
       <legend>Visualization Settings</legend>
+      <label for="width">Width:</label>
       <input type="number" id="width" placeholder="700" value="700" />
+      <label for="height">Height:</label>
       <input type="number" id="height" placeholder="200" value="200" />
 
       <input type="radio" id="ascending" name="order" value="0" checked />
@@ -22,6 +24,7 @@
       <label for="descending">Descending Order</label>
       
       <div class="slidecontainer">
+        <label for="sleepTime">Interval between steps:</label>
         <input type="range" min="0" max="500" value="50" class="slider" id="sleepTime">
       </div>
     </fieldset>
