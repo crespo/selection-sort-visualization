@@ -2,23 +2,19 @@ let values;
 
 let button;
 let order = 0; // 0 === ascending order, 1 === descending order
-let step = 0;
-let i = 0;
-let min_index = step;
 let states = []; // to keep track of strokes colors
 let widthInput = document.getElementById("width").value;
 let heightInput = document.getElementById("height").value;
 let sleepTime = document.getElementById("sleepTime").value;
-let finished = false;
 
 function setup() {
   createCanvas(document.getElementById("width").value, document.getElementById("height").value); // createCanvas([width], [height]);
   setupSettings();
-  
+
   button = createButton("Change Settings");
 }
 
-async function setupSettings() {
+function setupSettings() {
   resizeCanvas(document.getElementById("width").value, document.getElementById("height").value);
   order = parseInt(document.querySelector('input[name="order"]:checked').value);
   values = [];
@@ -32,15 +28,18 @@ async function setupSettings() {
 
 function draw() {
   background(51);
+  strokeWeight(5);
   for (let i = 0; i < values.length; i++) {
-    if (states[i] == 0) {
-      stroke('#E0777D'); // reddish color
-    } else if (states[i] == 1) {
-      stroke('#D6FFB7') // greenish color
-    } else {
-      stroke(255, 255, 255);
+    if (!(i % 5)) {
+      if (states[i] == 0) {
+        stroke('#E0777D'); // reddish color
+      } else if (states[i] == 1) {
+        stroke('#D6FFB7') // greenish color
+      } else {
+        stroke(255, 255, 255);
+      }
+      line(i, height, i, height - values[i]);
     }
-    line(i, height, i, height - values[i]);
   }
 }
 
@@ -63,16 +62,19 @@ async function selectionSort(values) {
     //console.log(sleepTime);
     await sleep(document.getElementById("sleepTime").value); // set the time, in ms, between each swap
     values = swap(values, step, min_index);
-    states[min_index] = -1;
-    states[step] = 0;
-    
+
     if (step == values.length - 2) {
       states[step + 1] = 0; // so that the final stroke is coloured as well
-      finished = true;
       noLoop(); // stop the loop after finished
+    } else {
+      states[min_index] = -1;
+      states[step] = 0;
     }
   }
-  button.mousePressed(finished === true ? await setupSettings : 0);
+  
+  if (!isLooping()) {
+    button.mousePressed(setupSettings);
+  }
 }
 
 function swap(array, step, min_index) {
