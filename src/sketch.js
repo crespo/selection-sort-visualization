@@ -1,22 +1,33 @@
-let values = [];
+let values;
 
 let step = 0;
 let i = 0;
 let min_index = step;
 let states = []; // to keep track of strokes colors
+let widthInput = document.getElementById("width").value;
+let heightInput = document.getElementById("height").value;
+let sleepTime = document.getElementById("sleepTime").value;
 
 function setup() {
-  createCanvas(200, 150); // createCanvas([width], [height]);
+  createCanvas(document.getElementById("width").value, document.getElementById("height").value); // createCanvas([width], [height]);
+  setupSettings();
+  
+  let button = createButton("Change Settings");
+  button.mousePressed(setupSettings);
+}
+
+function setupSettings() {
+  resizeCanvas(document.getElementById("width").value, document.getElementById("height").value);
+  values = [];
   for (let i = 0; i < width; i++) {
     values.push(Math.random() * height);
     states[i] = -1;
   }
-
   selectionSort(values);
+  loop();
 }
 
-async function draw() {
-  loop();
+function draw() {
   background(51);
   for (let i = 0; i < values.length; i++) {
     if (states[i] == 0) {
@@ -40,16 +51,20 @@ async function selectionSort(values) {
     }
     states[min_index] = 0;
     states[step] = 1;
-    await sleep(20); // set the time, in ms, between each swap
-    values = await swap(values, step, min_index);
+    //console.log(sleepTime);
+    await sleep(document.getElementById("sleepTime").value); // set the time, in ms, between each swap
+    values = swap(values, step, min_index);
     states[min_index] = -1;
     states[step] = 0;
 
-    if (step == values.length - 2) states[step + 1] = 0; // so that the final stroke is coloured as well
+    if (step == values.length - 2) {
+      states[step + 1] = 0; // so that the final stroke is coloured as well
+      noLoop(); // stop the loop after finished
+    }
   }
 }
 
-async function swap(array, step, min_index) {
+function swap(array, step, min_index) {
   let temp = array[step];
   array[step] = array[min_index];
   array[min_index] = temp;
