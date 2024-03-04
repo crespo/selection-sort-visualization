@@ -28,9 +28,9 @@ function setupSettings() {
 
 function draw() {
   background(51);
-  strokeWeight(5);
+  strokeWeight(8);
   for (let i = 0; i < values.length; i++) {
-    if (!(i % 5)) {
+    if (!(i % 9)) {
       if (states[i] == 0) {
         stroke('#E0777D'); // reddish color
       } else if (states[i] == 1) {
@@ -71,7 +71,7 @@ async function selectionSort(values) {
       states[step] = 0;
     }
   }
-  
+
   if (!isLooping()) {
     button.mousePressed(setupSettings);
   }
