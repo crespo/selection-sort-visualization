@@ -40,10 +40,12 @@ async function selectionSort(values) {
     }
     states[min_index] = 0;
     states[step] = 1;
-    await sleep(200); // set the time, in ms, between each swap
+    await sleep(20); // set the time, in ms, between each swap
     values = await swap(values, step, min_index);
     states[min_index] = -1;
     states[step] = 0;
+
+    if (step == values.length - 2) states[step + 1] = 0; // so that the final stroke is coloured as well
   }
 }
 
