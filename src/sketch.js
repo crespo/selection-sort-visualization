@@ -38,10 +38,12 @@ async function selectionSort(values) {
         min_index = i;
       }
     }
-    states[min_index], states[step] = 0, 1;
+    states[min_index] = 0;
+    states[step] = 1;
     await sleep(200); // set the time, in ms, between each swap
     values = await swap(values, step, min_index);
-    states[min_index], states[step] = -1, 0;
+    states[min_index] = -1;
+    states[step] = 0;
   }
 }
 
