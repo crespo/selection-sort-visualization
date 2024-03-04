@@ -1,11 +1,7 @@
 let values;
-
 let button;
 let order = 0; // 0 === ascending order, 1 === descending order
-let states = []; // to keep track of strokes colors
-let widthInput = document.getElementById("width").value;
-let heightInput = document.getElementById("height").value;
-let sleepTime = document.getElementById("sleepTime").value;
+let states = []; // to keep track of strokes' colors
 
 function setup() {
   createCanvas(document.getElementById("width").value, document.getElementById("height").value); // createCanvas([width], [height]);
@@ -59,7 +55,6 @@ async function selectionSort(values) {
     }
     states[min_index] = 0;
     states[step] = 1;
-    //console.log(sleepTime);
     await sleep(document.getElementById("sleepTime").value); // set the time, in ms, between each swap
     values = swap(values, step, min_index);
 
